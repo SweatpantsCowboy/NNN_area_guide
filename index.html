@@ -36,15 +36,15 @@
         <script src="js/rbush.min.js"></script>
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
-        <script src="data/Background_1.js"></script>
-        <script src="data/NNNBoundary_2.js"></script>
-        <script src="data/Parks_3.js"></script>
-        <script src="data/PointsofInterest_4.js"></script>
-        <script src="data/HistoricPlaces_5.js"></script>
+        <script src="data/Background_2.js"></script>
+        <script src="data/NearNorthNeighborhood_3.js"></script>
+        <script src="data/Parks_4.js"></script>
+        <script src="data/PointsofInterest_5.js"></script>
+        <script src="data/HistoricLandmarks_6.js"></script>
         <script>
         var map = L.map('map', {
             zoomControl:false, maxZoom:28, minZoom:1
-        }).fitBounds([[47.915282179963924,-97.08600323246198],[47.93957655641718,-97.00154079560339]]);
+        }).fitBounds([[47.92151116452133,-97.05940279449474],[47.933660308478004,-97.01717042807532]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -83,19 +83,44 @@
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
         }
-        map.createPane('pane_StreetView_0');
-        map.getPane('pane_StreetView_0').style.zIndex = 400;
-        var layer_StreetView_0 = L.tileLayer('http://basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-            pane: 'pane_StreetView_0',
+        map.createPane('pane_GoogleSatellite_0');
+        map.getPane('pane_GoogleSatellite_0').style.zIndex = 400;
+        var layer_GoogleSatellite_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleSatellite_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_GoogleSatellite_0;
+        map.addLayer(layer_GoogleSatellite_0);
+        map.createPane('pane_StreetView_1');
+        map.getPane('pane_StreetView_1').style.zIndex = 401;
+        var layer_StreetView_1 = L.tileLayer('http://basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            pane: 'pane_StreetView_1',
             opacity: 1.0,
             attribution: '',
             minZoom: 1,
             maxZoom: 28,
         });
-        layer_StreetView_0;
-        map.addLayer(layer_StreetView_0);
-        function pop_Background_1(feature, layer) {
+        layer_StreetView_1;
+        map.addLayer(layer_StreetView_1);
+        function pop_Background_2(feature, layer) {
             var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(String(feature.properties['OBJECTID']).replace(/'/g, '\'').replace(/"/g, '&quot;').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? autolinker.link(String(feature.properties['Id']).replace(/'/g, '\'').replace(/"/g, '&quot;').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Length'] !== null ? autolinker.link(String(feature.properties['Shape_Length']).replace(/'/g, '\'').replace(/"/g, '&quot;').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Area'] !== null ? autolinker.link(String(feature.properties['Shape_Area']).replace(/'/g, '\'').replace(/"/g, '&quot;').toLocaleString()) : '') + '</td>\
+                    </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
 			layer.on('popupopen', function(e) {
@@ -104,9 +129,9 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        function style_Background_1_0() {
+        function style_Background_2_0() {
             return {
-                pane: 'pane_Background_1',
+                pane: 'pane_Background_2',
                 opacity: 1,
                 color: 'rgba(35,35,35,0.0)',
                 dashArray: '',
@@ -116,25 +141,27 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(103,98,98,0.596078431372549)',
-                interactive: false,
+                interactive: true,
             }
         }
-        map.createPane('pane_Background_1');
-        map.getPane('pane_Background_1').style.zIndex = 401;
-        map.getPane('pane_Background_1').style['mix-blend-mode'] = 'normal';
-        var layer_Background_1 = new L.geoJson(json_Background_1, {
+        map.createPane('pane_Background_2');
+        map.getPane('pane_Background_2').style.zIndex = 402;
+        map.getPane('pane_Background_2').style['mix-blend-mode'] = 'normal';
+        var layer_Background_2 = new L.geoJson(json_Background_2, {
             attribution: '',
-            interactive: false,
-            dataVar: 'json_Background_1',
-            layerName: 'layer_Background_1',
-            pane: 'pane_Background_1',
-            onEachFeature: pop_Background_1,
-            style: style_Background_1_0,
+            interactive: true,
+            dataVar: 'json_Background_2',
+            layerName: 'layer_Background_2',
+            pane: 'pane_Background_2',
+            onEachFeature: pop_Background_2,
+            style: style_Background_2_0,
         });
-        bounds_group.addLayer(layer_Background_1);
-        map.addLayer(layer_Background_1);
-        function pop_NNNBoundary_2(feature, layer) {
+        bounds_group.addLayer(layer_Background_2);
+        function pop_NearNorthNeighborhood_3(feature, layer) {
             var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Length'] !== null ? autolinker.link(String(feature.properties['Shape_Length']).replace(/'/g, '\'').replace(/"/g, '&quot;').toLocaleString()) : '') + '</td>\
+                    </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
 			layer.on('popupopen', function(e) {
@@ -143,9 +170,9 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        function style_NNNBoundary_2_0() {
+        function style_NearNorthNeighborhood_3_0() {
             return {
-                pane: 'pane_NNNBoundary_2',
+                pane: 'pane_NearNorthNeighborhood_3',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
@@ -155,24 +182,23 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(0,0,255,0.0)',
-                interactive: false,
+                interactive: true,
             }
         }
-        map.createPane('pane_NNNBoundary_2');
-        map.getPane('pane_NNNBoundary_2').style.zIndex = 402;
-        map.getPane('pane_NNNBoundary_2').style['mix-blend-mode'] = 'normal';
-        var layer_NNNBoundary_2 = new L.geoJson(json_NNNBoundary_2, {
+        map.createPane('pane_NearNorthNeighborhood_3');
+        map.getPane('pane_NearNorthNeighborhood_3').style.zIndex = 403;
+        map.getPane('pane_NearNorthNeighborhood_3').style['mix-blend-mode'] = 'normal';
+        var layer_NearNorthNeighborhood_3 = new L.geoJson(json_NearNorthNeighborhood_3, {
             attribution: '',
-            interactive: false,
-            dataVar: 'json_NNNBoundary_2',
-            layerName: 'layer_NNNBoundary_2',
-            pane: 'pane_NNNBoundary_2',
-            onEachFeature: pop_NNNBoundary_2,
-            style: style_NNNBoundary_2_0,
+            interactive: true,
+            dataVar: 'json_NearNorthNeighborhood_3',
+            layerName: 'layer_NearNorthNeighborhood_3',
+            pane: 'pane_NearNorthNeighborhood_3',
+            onEachFeature: pop_NearNorthNeighborhood_3,
+            style: style_NearNorthNeighborhood_3_0,
         });
-        bounds_group.addLayer(layer_NNNBoundary_2);
-        map.addLayer(layer_NNNBoundary_2);
-        function pop_Parks_3(feature, layer) {
+        bounds_group.addLayer(layer_NearNorthNeighborhood_3);
+        function pop_Parks_4(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2"><strong>Name</strong><br />' + (feature.properties['Name'] !== null ? autolinker.link(String(feature.properties['Name']).replace(/'/g, '\'').replace(/"/g, '&quot;').toLocaleString()) : '') + '</td>\
@@ -185,9 +211,9 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        function style_Parks_3_0() {
+        function style_Parks_4_0() {
             return {
-                pane: 'pane_Parks_3',
+                pane: 'pane_Parks_4',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
@@ -200,21 +226,21 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_Parks_3');
-        map.getPane('pane_Parks_3').style.zIndex = 403;
-        map.getPane('pane_Parks_3').style['mix-blend-mode'] = 'normal';
-        var layer_Parks_3 = new L.geoJson(json_Parks_3, {
+        map.createPane('pane_Parks_4');
+        map.getPane('pane_Parks_4').style.zIndex = 404;
+        map.getPane('pane_Parks_4').style['mix-blend-mode'] = 'normal';
+        var layer_Parks_4 = new L.geoJson(json_Parks_4, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_Parks_3',
-            layerName: 'layer_Parks_3',
-            pane: 'pane_Parks_3',
-            onEachFeature: pop_Parks_3,
-            style: style_Parks_3_0,
+            dataVar: 'json_Parks_4',
+            layerName: 'layer_Parks_4',
+            pane: 'pane_Parks_4',
+            onEachFeature: pop_Parks_4,
+            style: style_Parks_4_0,
         });
-        bounds_group.addLayer(layer_Parks_3);
-        map.addLayer(layer_Parks_3);
-        function pop_PointsofInterest_4(feature, layer) {
+        bounds_group.addLayer(layer_Parks_4);
+        map.addLayer(layer_Parks_4);
+        function pop_PointsofInterest_5(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2"><strong>ADDRESS</strong><br />' + (feature.properties['ADDRESS'] !== null ? autolinker.link(String(feature.properties['ADDRESS']).replace(/'/g, '\'').replace(/"/g, '&quot;').toLocaleString()) : '') + '</td>\
@@ -233,11 +259,11 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        function style_PointsofInterest_4_0(feature) {
+        function style_PointsofInterest_5_0(feature) {
             switch(String(feature.properties['Category'])) {
                 case 'Child & Health Care':
                     return {
-                pane: 'pane_PointsofInterest_4',
+                pane: 'pane_PointsofInterest_5',
                 radius: 12.0,
                 opacity: 1,
                 color: 'rgba(0,0,0,1.0)',
@@ -253,7 +279,7 @@
                     break;
                 case 'Food & Drink':
                     return {
-                pane: 'pane_PointsofInterest_4',
+                pane: 'pane_PointsofInterest_5',
                 radius: 12.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -269,7 +295,7 @@
                     break;
                 case 'Retail':
                     return {
-                pane: 'pane_PointsofInterest_4',
+                pane: 'pane_PointsofInterest_5',
                 radius: 12.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -285,7 +311,7 @@
                     break;
                 case 'Schools & Churches':
                     return {
-                pane: 'pane_PointsofInterest_4',
+                pane: 'pane_PointsofInterest_5',
                 radius: 12.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -301,7 +327,7 @@
                     break;
                 case 'Services':
                     return {
-                pane: 'pane_PointsofInterest_4',
+                pane: 'pane_PointsofInterest_5',
                 radius: 12.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -317,36 +343,36 @@
                     break;
             }
         }
-        map.createPane('pane_PointsofInterest_4');
-        map.getPane('pane_PointsofInterest_4').style.zIndex = 404;
-        map.getPane('pane_PointsofInterest_4').style['mix-blend-mode'] = 'normal';
-        var layer_PointsofInterest_4 = new L.geoJson(json_PointsofInterest_4, {
+        map.createPane('pane_PointsofInterest_5');
+        map.getPane('pane_PointsofInterest_5').style.zIndex = 405;
+        map.getPane('pane_PointsofInterest_5').style['mix-blend-mode'] = 'normal';
+        var layer_PointsofInterest_5 = new L.geoJson(json_PointsofInterest_5, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_PointsofInterest_4',
-            layerName: 'layer_PointsofInterest_4',
-            pane: 'pane_PointsofInterest_4',
-            onEachFeature: pop_PointsofInterest_4,
+            dataVar: 'json_PointsofInterest_5',
+            layerName: 'layer_PointsofInterest_5',
+            pane: 'pane_PointsofInterest_5',
+            onEachFeature: pop_PointsofInterest_5,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_PointsofInterest_4_0(feature));
+                return L.circleMarker(latlng, style_PointsofInterest_5_0(feature));
             },
         });
-        bounds_group.addLayer(layer_PointsofInterest_4);
-        map.addLayer(layer_PointsofInterest_4);
-        function pop_HistoricPlaces_5(feature, layer) {
+        bounds_group.addLayer(layer_PointsofInterest_5);
+        map.addLayer(layer_PointsofInterest_5);
+        function pop_HistoricLandmarks_6(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
-                        <td colspan="2"><strong>Address</strong><br />' + (feature.properties['ADDRESS'] !== null ? autolinker.link(String(feature.properties['ADDRESS']).replace(/'/g, '\'').replace(/"/g, '&quot;').toLocaleString()) : '') + '</td>\
+                        <td class="visible-with-data" id="ADDRESS" colspan="2"><strong>ADDRESS</strong><br />' + (feature.properties['ADDRESS'] !== null ? autolinker.link(String(feature.properties['ADDRESS']).replace(/'/g, '\'').replace(/"/g, '&quot;').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2"><strong>Name</strong><br />' + (feature.properties['Name'] !== null ? autolinker.link(String(feature.properties['Name']).replace(/'/g, '\'').replace(/"/g, '&quot;').toLocaleString()) : '') + '</td>\
+                        <td class="visible-with-data" id="Name" colspan="2"><strong>Name</strong><br />' + (feature.properties['Name'] !== null ? autolinker.link(String(feature.properties['Name']).replace(/'/g, '\'').replace(/"/g, '&quot;').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2"><strong>NRHP</strong><br />' + (feature.properties['NRHP'] !== null ? autolinker.link(String(feature.properties['NRHP']).replace(/'/g, '\'').replace(/"/g, '&quot;').toLocaleString()) : '') + '</td>\
+                        <td class="visible-with-data" id="NRHP" colspan="2"><strong>NRHP</strong><br />' + (feature.properties['NRHP'] !== null ? autolinker.link(String(feature.properties['NRHP']).replace(/'/g, '\'').replace(/"/g, '&quot;').toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
@@ -356,9 +382,9 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        function style_HistoricPlaces_5_0() {
+        function style_HistoricLandmarks_6_0() {
             return {
-                pane: 'pane_HistoricPlaces_5',
+                pane: 'pane_HistoricLandmarks_6',
                 shape: 'diamond',
                 radius: 10.0,
                 opacity: 1,
@@ -373,32 +399,34 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_HistoricPlaces_5');
-        map.getPane('pane_HistoricPlaces_5').style.zIndex = 405;
-        map.getPane('pane_HistoricPlaces_5').style['mix-blend-mode'] = 'normal';
-        var layer_HistoricPlaces_5 = new L.geoJson(json_HistoricPlaces_5, {
+        map.createPane('pane_HistoricLandmarks_6');
+        map.getPane('pane_HistoricLandmarks_6').style.zIndex = 406;
+        map.getPane('pane_HistoricLandmarks_6').style['mix-blend-mode'] = 'normal';
+        var layer_HistoricLandmarks_6 = new L.geoJson(json_HistoricLandmarks_6, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_HistoricPlaces_5',
-            layerName: 'layer_HistoricPlaces_5',
-            pane: 'pane_HistoricPlaces_5',
-            onEachFeature: pop_HistoricPlaces_5,
+            dataVar: 'json_HistoricLandmarks_6',
+            layerName: 'layer_HistoricLandmarks_6',
+            pane: 'pane_HistoricLandmarks_6',
+            onEachFeature: pop_HistoricLandmarks_6,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.shapeMarker(latlng, style_HistoricPlaces_5_0(feature));
+                return L.shapeMarker(latlng, style_HistoricLandmarks_6_0(feature));
             },
         });
-        bounds_group.addLayer(layer_HistoricPlaces_5);
+        bounds_group.addLayer(layer_HistoricLandmarks_6);
+        map.addLayer(layer_HistoricLandmarks_6);
         var overlaysTree = [
-            {label: '<img src="legend/HistoricPlaces_5.png" /> Historic Places', layer: layer_HistoricPlaces_5},
-            {label: 'Points of Interest<br /><table><tr><td style="text-align: center;"><img src="legend/PointsofInterest_4_ChildHealthCare0.png" /></td><td>Child & Health Care</td></tr><tr><td style="text-align: center;"><img src="legend/PointsofInterest_4_FoodDrink1.png" /></td><td>Food & Drink</td></tr><tr><td style="text-align: center;"><img src="legend/PointsofInterest_4_Retail2.png" /></td><td>Retail</td></tr><tr><td style="text-align: center;"><img src="legend/PointsofInterest_4_SchoolsChurches3.png" /></td><td>Schools & Churches</td></tr><tr><td style="text-align: center;"><img src="legend/PointsofInterest_4_Services4.png" /></td><td>Services</td></tr></table>', layer: layer_PointsofInterest_4},
-            {label: '<img src="legend/Parks_3.png" /> Parks', layer: layer_Parks_3},
-            {label: '<img src="legend/NNNBoundary_2.png" /> NNN Boundary', layer: layer_NNNBoundary_2},
-            {label: '<img src="legend/Background_1.png" /> Background', layer: layer_Background_1},
-            {label: "Street View", layer: layer_StreetView_0, radioGroup: 'bm' },]
+            {label: '<img src="legend/HistoricLandmarks_6.png" /> Historic Landmarks', layer: layer_HistoricLandmarks_6},
+            {label: 'Points of Interest<br /><table><tr><td style="text-align: center;"><img src="legend/PointsofInterest_5_ChildHealthCare0.png" /></td><td>Child & Health Care</td></tr><tr><td style="text-align: center;"><img src="legend/PointsofInterest_5_FoodDrink1.png" /></td><td>Food & Drink</td></tr><tr><td style="text-align: center;"><img src="legend/PointsofInterest_5_Retail2.png" /></td><td>Retail</td></tr><tr><td style="text-align: center;"><img src="legend/PointsofInterest_5_SchoolsChurches3.png" /></td><td>Schools & Churches</td></tr><tr><td style="text-align: center;"><img src="legend/PointsofInterest_5_Services4.png" /></td><td>Services</td></tr></table>', layer: layer_PointsofInterest_5},
+            {label: '<img src="legend/Parks_4.png" /> Parks', layer: layer_Parks_4},
+            {label: '<img src="legend/NearNorthNeighborhood_3.png" /> Near North Neighborhood', layer: layer_NearNorthNeighborhood_3},
+            {label: '<img src="legend/Background_2.png" /> Background', layer: layer_Background_2},
+            {label: "Street View", layer: layer_StreetView_1, radioGroup: 'bm' },
+            {label: "Google Satellite", layer: layer_GoogleSatellite_0, radioGroup: 'bm' },]
         var lay = L.control.layers.tree(null, overlaysTree,{
             //namedToggle: true,
             //selectorBack: false,
